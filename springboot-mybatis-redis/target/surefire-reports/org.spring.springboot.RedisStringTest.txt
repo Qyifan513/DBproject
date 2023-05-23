@@ -1,0 +1,22 @@
+-------------------------------------------------------------------------------
+Test set: org.spring.springboot.RedisStringTest
+-------------------------------------------------------------------------------
+Tests run: 6, Failures: 0, Errors: 6, Skipped: 0, Time elapsed: 0.082 s <<< FAILURE! - in org.spring.springboot.RedisStringTest
+initializationError(org.spring.springboot.RedisStringTest)  Time elapsed: 0.006 s  <<< ERROR!
+java.lang.Exception: The class org.spring.springboot.RedisStringTest is not public.
+
+initializationError(org.spring.springboot.RedisStringTest)  Time elapsed: 0.001 s  <<< ERROR!
+java.lang.Exception: Test class should have exactly one public constructor
+
+initializationError(org.spring.springboot.RedisStringTest)  Time elapsed: 0 s  <<< ERROR!
+java.lang.Exception: Method testSaveUser() should be public
+
+initializationError(org.spring.springboot.RedisStringTest)  Time elapsed: 0 s  <<< ERROR!
+java.lang.Exception: Method testHash() should be public
+
+initializationError(org.spring.springboot.RedisStringTest)  Time elapsed: 0 s  <<< ERROR!
+java.lang.Exception: Method name() should be public
+
+initializationError(org.spring.springboot.RedisStringTest)  Time elapsed: 0 s  <<< ERROR!
+java.lang.Exception: Method testString() should be public
+

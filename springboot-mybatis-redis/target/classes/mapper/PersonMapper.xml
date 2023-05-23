@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.spring.springboot.dao.PersonMapper">
+  <resultMap id="BaseResultMap" type="org.spring.springboot.domain.Person">
+<!--    <id column="id" jdbcType="INTEGER" property="id" />-->
+    <result column="person_id" property="personId" />
+    <result column="name" property="name" />
+    <result column="sex" property="sex" />
+    <result column="tel" property="tel" />
+  </resultMap>
+
+  <sql id="Base_Column_List">
+    person_id,
+    name,
+    sex,
+    tel
+  </sql>
+
+  <insert id="insert" useGeneratedKeys="true" keyColumn="id" keyProperty="id" parameterType="org.spring.springboot.domain.Person">
+    INSERT INTO person
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="null != personId and '' != personId">
+        person_id,
+      </if>
+      <if test="null != name and '' != name">
+        name,
+      </if>
+      <if test="null != sex and '' != sex">
+        sex,
+      </if>
+      <if test="null != tel and '' != tel">
+        tel
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="null != personId and '' != personId">
+        #{personId},
+      </if>
+      <if test="null != name and '' != name">
+        #{name},
+      </if>
+      <if test="null != sex and '' != sex">
+        #{sex},
+      </if>
+      <if test="null != tel and '' != tel">
+        #{tel}
+      </if>
+    </trim>
+  </insert>
+
+  <delete id="delete" >
+    DELETE FROM person
+    WHERE person_id = #{person_id,jdbcType=VARCHAR}
+  </delete>
+
+  <update id="update" parameterType="org.spring.springboot.domain.Person">
+    UPDATE person
+    <set>
+      <if test="null != personId and '' != personId">person_id = #{personId},</if>
+      <if test="null != name and '' != name">name = #{name},</if>
+      <if test="null != sex and '' != sex">sex = #{sex},</if>
+      <if test="null != tel and '' != tel">tel = #{tel}</if>
+    </set>
+    WHERE person_id = #{person_id,jdbcType=VARCHAR}
+  </update>
+
+
+  <select id="load" parameterType="String" resultMap="BaseResultMap">
+    SELECT <include refid="Base_Column_List" />
+    FROM person
+    WHERE person_id = #{person_id,jdbcType=VARCHAR}
+  </select>
+  <select id="searchmal" resultMap="BaseResultMap">
+    SELECT <include refid="Base_Column_List" />
+    FROM person
+    Where sex = "男"
+  </select>
+  <select id="pageList" resultType="org.spring.springboot.domain.Person" resultMap="BaseResultMap">
+    SELECT *
+    FROM person
+    LIMIT #{offset}, #{pageSize}
+  </select>
+  <select id="searchID" resultMap="BaseResultMap">
+    SELECT person_id
+    FROM person
+  </select>
+  <select id="findPersonCount" resultType="java.lang.Long">
+    select count(1) from person
+  </select>
+</mapper>

@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.spring.springboot.dao.DepartmentMapper">
+<resultMap id="BaseResultMap" type="org.spring.springboot.domain.Department">
+    <result column="id" property="id" />
+    <result column="name" property="name" />
+    <result column="address" property="address" />
+    <result column="phone" property="phone" />
+    <result column="principal" property="principal" />
+    <result column="printele" property="printele" />
+</resultMap>
+<!--    <sql id="Base_Column_List">-->
+<!--        id, -->
+<!--    </sql>-->
+    <sql id="Base_Column_List">
+        id, name, address, phone
+    </sql>
+<select id="findById" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+    select *
+    from Department
+    where id = #{id}
+</select>
+<!--         insert into-->
+<!--         department(id,name,address,phone,principal,printele)-->
+<!--         values-->
+<!--         (#{id},#{name},#{address},#{phone},#{principal},#{printele})-->
+<!--    注意<trim标签的语法>少打了","导致报错-->
+<insert id="save" parameterType="Department" keyProperty="id">
+    insert into department
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+        <if test="null != id and '' != id">
+            id,
+        </if>
+        <if test="null != name and '' != name">
+            name,
+        </if>
+        <if test="null != address and '' != address">
+            address,
+        </if>
+        <if test="null != phone and '' != phone">
+            phone,
+        </if>
+        <if test="null != principal and '' != principal">
+            principal,
+        </if>
+        <if test="null != printele and '' != printele">
+            printele,
+        </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+        <if test="null != id and '' != id">
+            #{id,jdbcType=INTEGER},
+        </if>
+        <if test="null != name and '' != name">
+            #{name,jdbcType=VARCHAR},
+        </if>
+        <if test="null != address and '' != address">
+            #{address,jdbcType=VARCHAR},
+        </if>
+        <if test="null != phone and '' != phone">
+            #{phone,jdbcType=VARCHAR},
+        </if>
+        <if test="null != principal and '' != principal">
+            #{principal,jdbcType=VARCHAR},
+        </if>
+        <if test="null != printele and '' != printele">
+            #{printele,jdbcType=VARCHAR},
+        </if>
+    </trim>
+</insert>
+
+<update id="updateDepartment" parameterType="Department">
+    update department
+    set
+    <if test="null != name and '' != name">name = #{name},</if>
+    <if test="null != address and '' != address">address = #{address},</if>
+    <if test="null != phone and '' != phone">phone = #{phone},</if>
+    <if test="null != principal and '' != principal">principal = #{principal},</if>
+    <if test="null != printele and '' != printele">printele = #{printele}</if>
+    where
+    id = #{id}
+</update>
+    <select id="pageList" resultType="org.spring.springboot.domain.Department">
+        SELECT *
+        FROM department
+        LIMIT #{page}, #{size}
+    </select>
+
+    <select id="pageListCount" resultType="java.lang.Long">
+        SELECT count(1)
+        FROM department
+    </select>
+</mapper>
